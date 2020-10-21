@@ -37,10 +37,10 @@ func (bl *BanList) List() map[uint64]time.Time {
 
 func (bl *BanList) IsBanned(k uint64) (expires *time.Time, ok bool) {
 	bl.mu.Lock()
+	defer bl.mu.Unlock()
 	if e, ok := bl.keys[k]; ok {
 		return &e, true
 	}
-	bl.mu.Unlock()
 
 	return nil, false
 }
