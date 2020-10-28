@@ -45,7 +45,7 @@ func (bl *BanList) IsBanned(k uint64) (expires *time.Time, ok bool) {
 	return nil, false
 }
 
-func (bl *BanList) Clean() {
+func (bl *BanList) Clear() {
 	bl.mu.Lock()
 	now := time.Now()
 	for k, e := range bl.keys {
