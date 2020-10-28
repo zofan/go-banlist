@@ -29,7 +29,7 @@ func (bl *BanList) UnBan(k uint64) {
 	bl.mu.Unlock()
 }
 
-func (bl *BanList) List() map[uint64]time.Time {
+func (bl *BanList) All() map[uint64]time.Time {
 	bl.mu.Lock()
 	defer bl.mu.Unlock()
 	return bl.keys
