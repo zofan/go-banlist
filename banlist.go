@@ -8,7 +8,7 @@ import (
 type BanList struct {
 	keys map[uint64]time.Time
 
-	mu sync.Mutex
+	mu sync.RWMutex
 }
 
 func New() *BanList {
@@ -30,14 +30,14 @@ func (bl *BanList) UnBan(k uint64) {
 }
 
 func (bl *BanList) All() map[uint64]time.Time {
-	bl.mu.Lock()
-	defer bl.mu.Unlock()
+	bl.mu.RLock()
+	defer bl.mu.RUnlock()
 	return bl.keys
 }
 
 func (bl *BanList) IsBanned(k uint64) (expires *time.Time, ok bool) {
-	bl.mu.Lock()
-	defer bl.mu.Unlock()
+	bl.mu.RLock()
+	defer bl.mu.RUnlock()
 	if e, ok := bl.keys[k]; ok {
 		return &e, true
 	}
